@@ -3,4 +3,4 @@ Due to new regulations and guidelines arising from efforts against the COVID-19 
 
 This is my attempt to work through the project prepared by the hackathon organizers, which is a simple web-app that takes course discussion data from Canvas, and provides visualizations on the distribution of times at which discussions occur. 
 
-The original README file for the project can be found [here](./README-original.md).
+The original README file for the project can be found [here](./README_original.md).
