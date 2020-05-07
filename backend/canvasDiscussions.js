@@ -1,19 +1,19 @@
-const canvasAPI = require('node-canvas-api')
+const canvasAPI = require('node-canvas-api');
 
 const flatten = arr => arr.reduce((acc, cur) =>
   Array.isArray(cur)
     ? [...acc, ...cur]
     : [...acc, cur]
-, [])
+, []);
 
 const flattenTopicAndReplies = discussions => {
   return discussions.reduce((acc, discussion) => {
-    const timestamp = discussion.timestamp
-    const authorId = discussion.authorId
-    const discussionId = discussion.id
-    const topicTitle = discussion.topicTitle
-    const topicMessage = discussion.topicMessage
-    const replies = discussion.replies
+    const timestamp = discussion.timestamp;
+    const authorId = discussion.authorId;
+    const discussionId = discussion.id;
+    const topicTitle = discussion.topicTitle;
+    const topicMessage = discussion.topicMessage;
+    const replies = discussion.replies;
 
     acc.push({
       type: 'topic',
@@ -22,7 +22,7 @@ const flattenTopicAndReplies = discussions => {
       discussionId,
       topicTitle,
       topicMessage
-    })
+    });
 
     flatten(replies).forEach(reply => {
       acc.push({
@@ -32,23 +32,23 @@ const flattenTopicAndReplies = discussions => {
         authorId: reply.authorId,
         message: reply.message
       })
-    })
+    });
 
     return acc
   }, [])
-}
+};
 
 const getDiscussionTopicIds = async courseId => {
-  const discussionTopics = await canvasAPI.getDiscussionTopics(courseId)
+  const discussionTopics = await canvasAPI.getDiscussionTopics(courseId);
   return discussionTopics.map(discussionTopic => discussionTopic.id)
-}
+};
 
 const getNestedReplies = (replyObj, topicId) => {
   const replies = replyObj.hasOwnProperty('replies')
     ? flatten(
       // recursion in real life!
       replyObj.replies.map(replyObj => getNestedReplies(replyObj, topicId))
-    ) : []
+    ) : [];
   return [{
     authorId: replyObj.user_id,
     message: replyObj.message,
@@ -57,28 +57,28 @@ const getNestedReplies = (replyObj, topicId) => {
     parentId: replyObj.parent_id || topicId,
     id: replyObj.id
   }, ...replies]
-}
+};
 
 const getDiscussions = async courseId => {
-  const discussionTopicIds = await getDiscussionTopicIds(courseId)
+  const discussionTopicIds = await getDiscussionTopicIds(courseId);
   const discussionAndTopic = await Promise.all(
     discussionTopicIds
       .map(topicId => Promise.all([
         canvasAPI.getFullDiscussion(courseId, topicId),
         canvasAPI.getDiscussionTopic(courseId, topicId)
       ]))
-  )
+  );
   return discussionAndTopic.map(([discussion, topic]) => {
-    const topicTitle = topic.title
-    const topicMessage = topic.message
-    const author = topic.author
-    const timestamp = topic.created_at
-    const topicId = topic.id
+    const topicTitle = topic.title;
+    const topicMessage = topic.message;
+    const author = topic.author;
+    const timestamp = topic.created_at;
+    const topicId = topic.id;
     const replies = discussion.view.length > 0
       ? discussion.view
         .filter(x => !x.deleted)
         .map(reply => getNestedReplies(reply, topicId))
-      : []
+      : [];
     return {
       topicTitle,
       topicMessage,
@@ -88,9 +88,9 @@ const getDiscussions = async courseId => {
       replies
     }
   })
-}
+};
 
 module.exports = {
   getDiscussions,
   flattenTopicAndReplies
-}
+};
