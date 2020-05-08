@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
-function Dropdown (props) {
+function Dropdown(props) {
     const [courses, setCourses] = useState([]);
 
     fetch("http://localhost:4001/getCourses")
