@@ -14,7 +14,7 @@ function Welcome() {
     }, []);
 
     return (
-        <h1>Welcome to {self}'s Canvas discussion dashboard demo!</h1>
+        <h1>Welcome to {self}'s Canvas discussion dashboard!</h1>
     )
 }
 
