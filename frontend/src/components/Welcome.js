@@ -6,7 +6,10 @@ function Welcome() {
     // add useEffect here for self
     useEffect(() => {
         fetch('https://bryans-student-dashboard.netlify.app/.netlify/functions/hello')
-            .then(res => res.json())
+            .then(res => {
+                res.json()
+                console.log(res)
+            })
             .then(data => setSelf(data.name))
     }, []);
 
