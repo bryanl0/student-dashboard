@@ -1,9 +1,8 @@
 // test function for netlify
 
-exports.handler = async event => {
-    const subject = event.queryStringParameters.name || 'World';
-    return {
+exports.handler = function(event, context, callback) {
+    callback(null, {
         statusCode: 200,
-        body: `Hello ${subject}`
-    }
-};
+        body: "Hello, World"
+    });
+}
