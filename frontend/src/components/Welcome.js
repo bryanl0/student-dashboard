@@ -5,13 +5,13 @@ function Welcome() {
 
     // add useEffect here for self
     useEffect(() => {
-        fetch('http://localhost:4001/getSelf')
+        fetch('https://bryans-student-dashboard.netlify.app/.netlify/functions/hello')
             .then(res => res.json())
             .then(data => setSelf(data.name))
     }, []);
 
     return (
-        <h1>Welcome to {self}'s Canvas discussion dashboard demo!</h1>
+        <h1>Welcome to {self}'s Canvas discussion dashboard!</h1>
     )
 }
 
