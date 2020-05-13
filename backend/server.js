@@ -34,4 +34,9 @@ app.get('/getCourses', async (req, res) => {
     res.json(courses);
 });
 
+app.use(function (request, response) {
+    response.statusCode = 404;
+    response.end('404!');
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
