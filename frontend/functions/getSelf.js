@@ -7,7 +7,10 @@ const canvasAPI = require('node-canvas-api');
 //     res.json(self)
 // });
 
-exports.handler = function(event, context, callback) {
-
-
+exports.handler = async function(event, context, callback) {
+    const self = await canvasAPI.getSelf();
+    callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(self)
+    });
 };
