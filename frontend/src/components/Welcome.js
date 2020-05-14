@@ -8,7 +8,6 @@ function Welcome() {
         fetch('https://bryans-student-dashboard.netlify.app/.netlify/functions/hello')
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setSelf(data.name)
             })
     }, []);
