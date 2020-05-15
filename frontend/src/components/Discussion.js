@@ -12,7 +12,7 @@ function Discussion() {
     useEffect(() => {
         setLoaded(false);
         setTimestamps([]);
-        fetch(`http://localhost:4001/getDiscussions/${selected}`)
+        fetch(`https://bryans-student-dashboard.netlify.app/.netlify/functions/getDiscussions?course=${selected}`)
             .then(res => res.json())
             .then(data => {
                 setDiscussion(data);
