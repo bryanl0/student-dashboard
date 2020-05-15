@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 function Dropdown(props) {
     const [courses, setCourses] = useState([]);
 
-    fetch("http://localhost:4001/getCourses")
+    fetch('https://bryans-student-dashboard.netlify.app/.netlify/functions/getCourses')
         .then(res => res.json())
         .then(data => {
             let allCourses = [];
